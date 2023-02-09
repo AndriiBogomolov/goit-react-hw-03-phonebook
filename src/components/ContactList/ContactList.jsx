@@ -1,6 +1,5 @@
 import propTypes from 'prop-types';
 import css from './ContactList.module.css';
-// import Notification from './Notification';
 
 export const ContactList = ({ contacts, deleteContact }) => (
   <div>

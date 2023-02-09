@@ -47,7 +47,6 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    console.log('App componentDidMount');
     
     const contacts = localStorage.getItem('contacts');
     const parsedContacts = JSON.parse(contacts);
@@ -56,19 +55,13 @@ export class App extends Component {
       this.setState({ contacts: parsedContacts });
     }
   }
-  
-  // метод класа для зберігання в локалсторідж
 
   componentDidUpdate(prevProps, prevState) { 
-    console.log('App componentDidUpdate');
 
     if (this.state.contacts !== prevState.contacts) {
         localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     }
 
-    console.log(prevState);
-
-    console.log(this.state);
   } 
 
 
