@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import Filter from './Filter';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
-import Notification from "./Notification";
+import Notification from './Notification';
 
 export class App extends Component {
   state = {
@@ -14,8 +14,23 @@ export class App extends Component {
     ],
     filter: '',
   };
-  
-  addContact = contact  => {
+
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
+  addContact = contact => {
     if (
       !this.state.contacts.find(
         ({ name }) => name.toLocaleLowerCase() === contact.name.toLowerCase()
@@ -42,31 +57,10 @@ export class App extends Component {
   deleteContact = contactId => {
     this.setState(({ contacts }) => ({
       contacts: contacts.filter(({ id }) => id !== contactId),
-      
     }));
   };
 
-  componentDidMount() {
-    
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
-
-    if (parsedContacts) {
-      this.setState({ contacts: parsedContacts });
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) { 
-
-    if (this.state.contacts !== prevState.contacts) {
-        localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    }
-
-  } 
-
-
   render() {
-
     return (
       <div
         style={{
@@ -82,14 +76,14 @@ export class App extends Component {
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
         <h2> Contacts</h2>
-          {this.state.contacts.length !== 0 && (
-            <Filter value={this.state.filter} onChange={this.findContact} />
-          )}
+        {this.state.contacts.length !== 0 && (
+          <Filter value={this.state.filter} onChange={this.findContact} />
+        )}
         <ContactList
           contacts={this.filterContacts()}
-            deleteContact={this.deleteContact}
+          deleteContact={this.deleteContact}
         />
-        {this.state.contacts.length === 0 && (<Notification />)}
+        {this.state.contacts.length === 0 && <Notification />}
       </div>
     );
   }

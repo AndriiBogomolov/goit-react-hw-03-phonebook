@@ -3,7 +3,6 @@ import { nanoid } from 'nanoid';
 import React, { Component } from 'react';
 import css from './ContactForm.module.css';
 
-
 export class ContactForm extends Component {
   state = {
     name: '',
@@ -30,7 +29,11 @@ export class ContactForm extends Component {
 
   render() {
     return (
-      <form className={css.form} onSubmit={this.handleSubmit} autoComplete="off">
+      <form
+        className={css.form}
+        onSubmit={this.handleSubmit}
+        autoComplete="off"
+      >
         <label className={css.formLabel}>Name </label>
         <input
           className={css.formName}

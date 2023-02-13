@@ -20,9 +20,8 @@ export const ContactList = ({ contacts, deleteContact }) => (
   </div>
 );
 
-
 ContactList.propTypes = {
-  contact: propTypes.shape(
+  contacts: propTypes.arrayOf(
     propTypes.exact({
       id: propTypes.string.isRequired,
       name: propTypes.string.isRequired,
@@ -31,6 +30,5 @@ ContactList.propTypes = {
   ),
   deleteContact: propTypes.func.isRequired,
 };
-
 
 export default ContactList;
